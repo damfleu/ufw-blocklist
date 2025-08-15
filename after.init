@@ -85,6 +85,7 @@ start)
         iptables -X ufw-blocklist-input
     fi
     iptables -N ufw-blocklist-input
+    iptables -A ufw-blocklist-input -j LOG --log-level 3 --log-prefix "[UFW BLOCKLIST INPUT] " -m limit --limit 3/minute --limit-burst 10
     iptables -A ufw-blocklist-input -j DROP -m comment --comment "ufw-blocklist-input"
     iptables -I INPUT -m set --match-set $ipsetname src -j ufw-blocklist-input
 
